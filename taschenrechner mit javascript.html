@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Aufgabe 3</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="bootstrap.js"></script>
+</head>
+<body>
+
+<h1>Aufgabe 3</h1>
+<form id="formular" onsubmit="checkInput()">
+  <input id="firstNumber" name="firstNumb" title="Zahl" pattern="[0-9]"  required>
+  <select id="operation" name="operation">
+    <option value="plus" >PLUS</option>
+    <option value="minus" >MINUS</option>
+    <option value="mal" >MAL</option>
+    <option value="durch" >GETEILT</option>
+    <option value="potenz">POTENZ</option>
+  </select>
+  <input id="secondNumber" name="secondNumb" title="Zahl" pattern="[0-9]"  required>
+  =
+  <input  id="ergebnis" name="ergebnis" readonly>
+
+  <p></p>
+  <button type="button" id="absenden" onclick="addAChild()">absenden</button>
+  <button type="reset" >Formular zurücksetzen</button>
+  <button type="button" id="deleteHistory" onclick=" deleteLocalStorage()"> Historie löschen</button>
+  <button type="button" id="restoreHistory" onclick=" restoreLocalStorage()"> Historie wiederherstellen</button>
+  <button type="button" id="emptyResultList" onclick=" clearBox()">ausblenden</button>
+
+</form>
+
+
+<h2>bisherige Berechnungen</h2>
+<div id="resultList" class="alert alert-success" >
+ <strong>Erfolgreiche Berechnungen</strong>
+
+</div>
+
+<div id="badResultList" class="alert alert-danger">
+  <strong>Fehlgeschlagene Berechnungen</strong> Bitte gib richtige Zahlen ein und versuche es erneut!!!
+
+
+</div>
+
+<script type="text/javascript">
+
+
+
+
+  var count=0;
+
+
+  function addAChild() {
+
+
+
+    count++;
+
+    let firstNumb = document.getElementById("firstNumber").value;
+    let secondNumb = document.getElementById("secondNumber").value;
+    let operation = document.getElementById("operation").value;
+
+
+    if (operation == "plus") {
+
+      let result = Number(firstNumb) + Number(secondNumb);
+      let create = document.createElement("P");
+      let text = document.createTextNode(count+'. '+firstNumb+'+'+ secondNumb+"="+result);
+      create.appendChild(text);
+
+      if(isNaN(firstNumb) || isNaN(secondNumb) ) {
+        document.forms[0].reset();
+        document.getElementById("badResultList").appendChild(create);
+        document.getElementById("ergebnis").value = result ;
+      } else {
+        document.getElementById("resultList").appendChild(create);
+        document.getElementById("ergebnis").value = result ;
+      }
+
+      for(var i=0, len=localStorage.length; i<len; i++) {
+        var key = localStorage.key(i);
+        var value = localStorage[key];
+
+      }
+
+      localStorage.setItem(count, count+'. '+firstNumb+'+'+ secondNumb+"="+result);
+
+
+
+
+    }
+
+    if (operation == "minus") {
+
+      let result = Number(firstNumb) - Number(secondNumb);
+      let create = document.createElement("P");
+      let text = document.createTextNode(count+'. '+firstNumb+'-'+ secondNumb+"="+result);
+      create.appendChild(text);
+
+      if(isNaN(firstNumb) || isNaN(secondNumb) ) {
+        document.forms[0].reset();
+        document.getElementById("badResultList").appendChild(create);
+        document.getElementById("ergebnis").value = result ;
+      } else {
+        document.getElementById("resultList").appendChild(create);
+        document.getElementById("ergebnis").value = result ;
+      }
+
+
+      for(var i=0, len=localStorage.length; i<len; i++) {
+        var key = localStorage.key(i);
+        var value = localStorage[key];
+
+      }
+
+      localStorage.setItem(count, count+'. '+firstNumb+'-'+ secondNumb+"="+result);
+    }
+
+
+
+    if (operation == "mal") {
+
+      let result = Number(firstNumb) * Number(secondNumb);
+      let create = document.createElement("P");
+      let text = document.createTextNode(count+'. '+firstNumb+'*'+ secondNumb+"="+result);
+      create.appendChild(text);
+
+      if(isNaN(firstNumb) || isNaN(secondNumb) ) {
+        document.forms[0].reset();
+        document.getElementById("badResultList").appendChild(create);
+        document.getElementById("ergebnis").value = result ;
+      } else {
+        document.getElementById("resultList").appendChild(create);
+        document.getElementById("ergebnis").value = result ;
+      }
+
+      for(var i=0, len=localStorage.length; i<len; i++) {
+        var key = localStorage.key(i);
+        var value = localStorage[key];
+
+      }
+
+      localStorage.setItem(count, count+'. '+firstNumb+'*'+ secondNumb+"="+result);
+
+    }
+
+    if (operation == "durch") {
+
+      let result = Number(firstNumb) / Number(secondNumb);
+      let create = document.createElement("P");
+      let text = document.createTextNode(count+'. '+firstNumb+'/'+ secondNumb+"="+result);
+      create.appendChild(text);
+
+      if(isNaN(firstNumb) || isNaN(secondNumb) ) {
+        document.forms[0].reset();
+        document.getElementById("badResultList").appendChild(create);
+        document.getElementById("ergebnis").value = result ;
+      } else {
+        document.getElementById("resultList").appendChild(create);
+        document.getElementById("ergebnis").value = result ;
+      }
+
+
+
+      if (secondNumb == 0) {
+        alert("Teilen durch 0 nicht möglich!!!");
+      }
+
+      for(var i=0, len=localStorage.length; i<len; i++) {
+        var key = localStorage.key(i);
+        var value = localStorage[key];
+
+      }
+
+      localStorage.setItem(count, count+'. '+firstNumb+'/'+ secondNumb+"="+result);
+
+    }
+
+    if (operation == "potenz") {
+
+      let result = Math.pow(firstNumb, secondNumb);
+      let create = document.createElement("P");
+      let text = document.createTextNode(count+'. '+firstNumb+'^'+ secondNumb+"="+result);
+      create.appendChild(text);
+
+      if(isNaN(firstNumb) || isNaN(secondNumb) ) {
+        document.forms[0].reset();
+        document.getElementById("badResultList").appendChild(create);
+        document.getElementById("ergebnis").value = result ;
+      } else {
+        document.getElementById("resultList").appendChild(create);
+        document.getElementById("ergebnis").value = result ;
+      }
+
+
+      for(var i=0, len=localStorage.length; i<len; i++) {
+        var key = localStorage.key(i);
+        var value = localStorage[key];
+
+      }
+
+      localStorage.setItem(count, count+'. '+firstNumb+'^'+ secondNumb+"="+result);
+    }
+
+
+  }
+
+
+
+  function restoreLocalStorage() {
+
+
+    for(var i=0, len=localStorage.length; i<len; i++) {
+      let key = localStorage.key(i);
+      var value = localStorage[key];
+
+      document.getElementById("resultList").innerHTML = localStorage.getItem(key);
+
+  }
+
+
+  function deleteLocalStorage() {
+    localStorage.clear();
+  }
+
+
+
+  function clearBox() {
+    document.getElementById("resultList").innerHTML = "";
+    document.getElementById("badResultList").innerHTML = "";
+    count = 0;
+  }
+
+
+
+
+</script>
+
+
+</body>
+</html>
