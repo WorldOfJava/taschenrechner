@@ -2,15 +2,16 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Aufgabe 3</title>
+  <title>Aufgabe 3 final</title>
 
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="taschenrechner.css">
   <script src="bootstrap.js"></script>
 </head>
 <body>
 
 <h1>Aufgabe 3</h1>
-<form id="formular" onsubmit="checkInput()">
+<form id="formular" >
   <input id="firstNumber" name="firstNumb" title="Zahl" pattern="[0-9]"  required>
   <select id="operation" name="operation">
     <option value="plus" >PLUS</option>
@@ -34,19 +35,50 @@
 
 
 <h2>bisherige Berechnungen</h2>
+<h3>Erfolgreiche Berechnungen</h3>
 <div id="resultList" class="alert alert-success" >
- <strong>Erfolgreiche Berechnungen</strong>
+  <strong>Erfolgreiche Berechnungen</strong>
 
 </div>
 
+<h3 style="color: red;">Fehlgeschlagene Berechnungen</h3>
 <div id="badResultList" class="alert alert-danger">
   <strong>Fehlgeschlagene Berechnungen</strong> Bitte gib richtige Zahlen ein und versuche es erneut!!!
 
 
 </div>
 
+<div id="test">
+
+</div>
+
 <script type="text/javascript">
 
+
+  restoreLocalStorage();
+  clearBox();
+
+  function restoreLocalStorage() {
+
+
+    for(var i=0, len=localStorage.length; i<len; i++) {
+
+      var key = localStorage.key(i);
+      var value = localStorage[key];
+
+      //alert(value);
+
+      let create = document.createElement("P");
+      var j=i+1;
+      let text = document.createTextNode(j+'.   '+value);
+      create.appendChild(text);
+
+      document.getElementById("resultList").appendChild(create);
+
+      //document.getElementById("resultList").innerHTML = localStorage.getItem(key);
+
+    }
+  }
 
 
 
@@ -71,6 +103,8 @@
       let text = document.createTextNode(count+'. '+firstNumb+'+'+ secondNumb+"="+result);
       create.appendChild(text);
 
+      let toStore = firstNumb+'+'+ secondNumb+"="+result;
+
       if(isNaN(firstNumb) || isNaN(secondNumb) ) {
         document.forms[0].reset();
         document.getElementById("badResultList").appendChild(create);
@@ -79,17 +113,9 @@
         document.getElementById("resultList").appendChild(create);
         document.getElementById("ergebnis").value = result ;
       }
+      localStorage.setItem(count, toStore);
 
-      for(var i=0, len=localStorage.length; i<len; i++) {
-        var key = localStorage.key(i);
-        var value = localStorage[key];
-
-      }
-
-      localStorage.setItem(count, count+'. '+firstNumb+'+'+ secondNumb+"="+result);
-
-
-
+      //document.getElementById("test").innerHTML = localStorage.getItem("ergibness");
 
     }
 
@@ -110,12 +136,6 @@
       }
 
 
-      for(var i=0, len=localStorage.length; i<len; i++) {
-        var key = localStorage.key(i);
-        var value = localStorage[key];
-
-      }
-
       localStorage.setItem(count, count+'. '+firstNumb+'-'+ secondNumb+"="+result);
     }
 
@@ -135,12 +155,6 @@
       } else {
         document.getElementById("resultList").appendChild(create);
         document.getElementById("ergebnis").value = result ;
-      }
-
-      for(var i=0, len=localStorage.length; i<len; i++) {
-        var key = localStorage.key(i);
-        var value = localStorage[key];
-
       }
 
       localStorage.setItem(count, count+'. '+firstNumb+'*'+ secondNumb+"="+result);
@@ -169,12 +183,6 @@
         alert("Teilen durch 0 nicht möglich!!!");
       }
 
-      for(var i=0, len=localStorage.length; i<len; i++) {
-        var key = localStorage.key(i);
-        var value = localStorage[key];
-
-      }
-
       localStorage.setItem(count, count+'. '+firstNumb+'/'+ secondNumb+"="+result);
 
     }
@@ -195,14 +203,8 @@
         document.getElementById("ergebnis").value = result ;
       }
 
-
-      for(var i=0, len=localStorage.length; i<len; i++) {
-        var key = localStorage.key(i);
-        var value = localStorage[key];
-
-      }
-
       localStorage.setItem(count, count+'. '+firstNumb+'^'+ secondNumb+"="+result);
+
     }
 
 
@@ -210,16 +212,7 @@
 
 
 
-  function restoreLocalStorage() {
 
-
-    for(var i=0, len=localStorage.length; i<len; i++) {
-      let key = localStorage.key(i);
-      var value = localStorage[key];
-
-      document.getElementById("resultList").innerHTML = localStorage.getItem(key);
-
-  }
 
 
   function deleteLocalStorage() {
@@ -233,6 +226,7 @@
     document.getElementById("badResultList").innerHTML = "";
     count = 0;
   }
+
 
 
 
