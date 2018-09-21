@@ -210,7 +210,7 @@ fillDatabaseBillig();
 
 <div id="form1">
 <h1>PhP Taschenrechner mit DB-Anbindung</h1>
-<form action="taschenrechner.php" method="POST">
+<form action="taschenrechner_v2.php" method="POST">
   <input name="number1" title="Zahl" pattern="^[0-9]+$"  >
   <select name="g">
     <option name="g" value="+" >PLUS</option>
@@ -233,7 +233,7 @@ fillDatabaseBillig();
 <div id="form2">
 <h1>Schreiben in die Datenbank funktioniert:</h1>
 <h2 style="color: lightgreen">Hier unten</h2>
-<form action="taschenrechner.php" method="POST">
+<form action="taschenrechner_v2.php" method="POST">
 		Vorname:  <input type="text" name="vorname" > <br>
 		Nachname: <input type="text" name="nachname"> <br>
 		Email:    <input type="email" name="email"> 
