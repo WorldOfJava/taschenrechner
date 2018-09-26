@@ -58,7 +58,6 @@ ini_set('display_errors', 0);
 			    case '%';
 				$result=$num1%$num2;
 				break;
-					
 			}
 				
 		}
@@ -71,10 +70,6 @@ ini_set('display_errors', 0);
 	{
 		echo ' Ohne Eingabe isset halt leer <br/>';
 	}
-
-	
-	
-
 
 // funktioniert
 function fillDatabaseBillig($pdo)
@@ -110,6 +105,7 @@ function printDatabaseBillig($pdo)
 		echo "<th>Vorname</th>";
 		echo "<th>Nachname</th>";
 		echo "<th>Email</th>";
+		echo "<th>Aktion</th>";
 	foreach ($pdo->query($pdoSQL2) as $row) 
 	{
 		echo "</tr>";
@@ -118,11 +114,12 @@ function printDatabaseBillig($pdo)
 		echo "<td>" .$row['Vorname']."<br/> </td>";
 		echo "<td>" .$row['Nachname']."<br/> </td>";
 		echo "<td>" .$row['Email']."<br/> </td>";
+		echo "<td>" . '<button name="killRow" >Löschen</button>' . "</td>";
 		echo "</tr>";
 	}
 	echo "</table>";
-	
 }
+
 
 
 // funktioniert
@@ -155,7 +152,7 @@ function printDatabaseBerechnungen($pdo)
 		echo "<th>Operator</th>";
 		echo "<th>Zweite Zahl</th>";
 		echo "<th>Ergebnis</th>";
-	  //echo "<th>Aktion</th>";
+	    echo "<th>Aktion</th>";
 	foreach ($pdo->query($pdoSQL3) as $row2)
 	{
 		echo "</tr>";
@@ -165,10 +162,18 @@ function printDatabaseBerechnungen($pdo)
 		echo '<td>' .$row2['Operator'] . "</td>";
 		echo "<td>" .$row2['Zweite_Zahl']. "</td>";
 		echo "<td>" .$row2['Ergebnis']. "</td>";
+		echo "<td>" . '<button name="killRow2" >Löschen</button>' . "</td>";
 		echo "</tr>";
 	}
 	echo '</table>';
 	
+}
+// instabil
+function deleteRow($pdo)
+{
+	$sqldel = "DELETE FROM taschenrechner WHERE ID = ?";
+	$pdo->exec($sqldel);
+	echo "Eintrag erfolgreich gelöscht";
 }
 
 // funktioniert
@@ -195,7 +200,11 @@ function checkSet($pdo, $result)
 		printDatabaseBillig($pdo);
 	}
 
-	
+	//geht nicht, der im button(z. 117) gesetzte Name kann nicht angesprochen werden
+	if(isset($_POST['killRow']))
+	{
+		echo 'geht xD';
+	}
 }
 
 checkSet($pdo, $result);
@@ -229,12 +238,12 @@ checkSet($pdo, $result);
 <h1>Schreiben in die Datenbank funktioniert:</h1>
 <h2 style="color: lightgreen">Hier unten</h2>
 <form action="taschenrechner_v3_final_mit_pdo.php" method="POST">
-		Vorname:  <input type="text" name="vorname" > <br>
-		Nachname: <input type="text" name="nachname"> <br>
-		Email:    <input type="email" name="email"> 
-		<input type="submit" name="anBilligSchicken">
-		<br><br>
-		<input type="submit" name="printBillig" value="DB ausgeben">
+	Vorname:  <input type="text" name="vorname" > <br>
+	Nachname: <input type="text" name="nachname"> <br>
+	Email:    <input type="email" name="email"> 
+	<input type="submit" name="anBilligSchicken">
+	<br><br>
+	<input type="submit" name="printBillig" value="DB ausgeben">
 </form>
 </div>
 <br>
