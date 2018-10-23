@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Aufgabe 2</title>
+  <script src="taschenrechner2.js"></script>
+  <link rel="stylesheet" type="text/css" href="taschenrechner.css">
+</head>
+<body>
+
+<h1>Aufgabe 2</h1>
+<form  id="schwul" name="form"">
+  <input id="a" name="zahl1" title="Zahl" pattern="^[0-9]+$"  required>
+  <select id="c">
+    <option value="1" id="plus" >PLUS</option>
+    <option value="2" id="minus" >MINUS</option>
+    <option value="3" id="mal" >MAL</option>
+    <option value="4" id="durch" >GETEILT</option>
+  </select>
+  <input  id="b" name="zahl2" title="Zahl" pattern="^[0-9]+$"  required>
+  =
+  <input  id="ergebnis" readonly>
+
+  <p></p>
+  <button type="button" id="absenden" onclick="meldung()">absenden</button>
+  <button type="reset" >Formular zurücksetzen</button>
+  <button type="submit" id="test" onclick=" meldung()"> Eingaben testen</button>
+</form>
+
+
+
+</body>
+</html>
